@@ -2,7 +2,9 @@
 
 Manage the technology on your radar with this interactive UI.
 
-![example_radar](https://git-cert.heb.com/nunamaker.tim/tech-radar/raw/master/radar.png)
+See it in action with the [example radar](http://dondochaka.dyndns.org/tech-radar/#/).
+
+![radar screenshot](https://git-cert.heb.com/nunamaker.tim/tech-radar/raw/master/radar.png)
 
 # Authors
 
