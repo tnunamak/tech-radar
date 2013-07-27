@@ -32,16 +32,34 @@ body {
     letter-spacing: -1px;
 }
 
-input[type="text"].small-input {
+input[type="text"].input-small {
   height: 10px;
   font-size: 9pt;
   line-height: 10px;
-}
-.small-text {
-  font-size: 8pt;
 }
 
 .radar-manager ul {
   list-style-type: none;
   margin: 5px;
+}
+
+.new-category {
+  max-height: 25px;
+  font-size: 8pt;
+  float: right;
+  padding-right: 100px;
+  margin: 0;
+}
+.new-category a {
+  float: right;
+}
+.new-category input {
+  margin-right: 10px;
+}
+.active-tech {
+/*  border-color: teal;
+  border-style: solid;
+  border-width: thin;*/
+  font-weight: bold;
+  color: #4889ff;
 }

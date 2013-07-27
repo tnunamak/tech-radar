@@ -6,10 +6,10 @@
 </style>
 <div class="container">
     <div class="row">
-        <div class="span8">
-            <radar-diagram height="800" width="800"/>
+        <div class="span7">
+            <radar-diagram height="700" width="700"/>
         </div>
-        <div class="span4 radar-manager">
+        <div class="span5 radar-manager">
             <ul class="nav nav-tabs">
                 <li ng-repeat="status in radarData" ng-class="{active : status.active}">
                     <a ng-click="setActive(status)">{{ status.label }}</a>
@@ -18,12 +18,13 @@
             <div ng-repeat="status in radarData" ng-show="status.active">
                 <div ng-repeat="category in status.categories">
                     <h5 style="display: inline">{{ category.label }}</h5>
-                    <form ng-submit="category.addingOne = false; addTech(category, category.new)" class="small-text" style="display: inline">
+                    <form ng-submit="category.addingOne = false; addTech(category, category.new)" class="new-category">
                         <a href="#" ng-click="category.addingOne = true" ng-hide="category.addingOne">new</a>
-                        <input type="text" ng-model="category.new" class="small-input input-small" ng-show="category.addingOne" style="margin-top: 5px"/>
+                        <a href="#" ng-click="category.new = ''; category.addingOne = false" ng-show="category.addingOne">cancel</a>
+                        <input type="text" ng-model="category.new" class="input-small" ng-show="category.addingOne" style="margin-top: 5px"/>
                     </form>
                     <ul>
-                        <li ng-repeat="technology in category.technologies">
+                        <li ng-repeat="technology in category.technologies" ng-class="{'active-tech' : technology.active}">
                             {{ technology.label }} <i class="icon-remove" ng-click="removeTech(category, technology)"></i></li>
                     </ul>
                 </div>
