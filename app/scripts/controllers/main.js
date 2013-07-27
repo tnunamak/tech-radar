@@ -22,4 +22,12 @@ angular.module('techRadarApp')
     $scope.removeTech = function(category, tech) {
         category.technologies = _.without(category.technologies, tech);
     };
+    $scope.$watch('radarData', function(data){
+      if(!data) return;
+      $scope.activeCategory =  _.findWhere(_.flatten(_.pluck(data, 'categories')), {active: true});
+      $scope.activeStatus = _.find(data, function(status){
+        return _.indexOf(status.categories, $scope.activeCategory) >= 0;
+      });
+    }, true);
+
   }]);

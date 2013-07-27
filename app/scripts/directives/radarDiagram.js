@@ -146,6 +146,14 @@ angular.module('techRadarApp').directive('radarDiagram', ['$log', 'radarService'
         })
         .attr("d", function (d) {
           return arc.innerRadius(d.arc.innerRadius).outerRadius(d.arc.outerRadius)(d.arc);
+        })
+        .on('mouseover', function (d) {
+          d.active = true;
+          redrawTechCircles();
+        })
+        .on('mouseout', function (d) {
+          d.active = false;
+          redrawTechCircles();
         });
 
       var nodeStatusEnter = svgNodes.selectAll("g").data(radarService.radar.data).enter().append("g").attr("class", "tech");
@@ -157,7 +165,6 @@ angular.module('techRadarApp').directive('radarDiagram', ['$log', 'radarService'
         .enter()
         .append("g")
         .datum(function(category, categoryIndex) {
-          console.log(category);
           category.color = colorFiveGroupsOfSeven(7 * categoryIndex + 6);
           return category;
         })
@@ -209,7 +216,8 @@ angular.module('techRadarApp').directive('radarDiagram', ['$log', 'radarService'
           });
 
         techEnter.append("circle").attr("r", defaultTechRadius)
-          .style("stroke", "white")
+          .style("stroke", "grey")
+          .style("fill", "whitesmoke")
           .attr("cx",function (d) {
             return d.x;
           }).attr("cy", function (d) {

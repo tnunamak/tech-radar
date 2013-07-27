@@ -7,6 +7,10 @@
 <div class="container">
     <div class="row">
         <div class="span7">
+            <span class="mouseover-title">
+                <h3>{{activeCategory.label}}</h3>
+                <h4>{{ activeStatus.label}}</h4>
+            </span>
             <radar-diagram height="700" width="700"/>
         </div>
         <div class="span4 radar-manager">
@@ -17,10 +21,10 @@
             </ul>
             <div ng-repeat="status in radarData" ng-show="status.active">
                 <div class="category"  ng-repeat="category in status.categories" style="background-color: {{category.color}}">
-                    <h5 style="display: inline;">{{ category.label }} - {{category.color}}</h5>
+                    <h5 style="display: inline;">{{ category.label }}</h5>
                     <form ng-submit="category.addingOne = false; addTech(category, category.new)" class="new-category">
-                        <a href="#" ng-click="category.addingOne = true" ng-hide="category.addingOne">new</a>
-                        <a href="#" ng-click="category.new = ''; category.addingOne = false" ng-show="category.addingOne">cancel</a>
+                        <a ng-click="category.addingOne = true" ng-hide="category.addingOne">new</a>
+                        <a ng-click="category.new = ''; category.addingOne = false" ng-show="category.addingOne">cancel</a>
                         <input type="text" ng-model="category.new" class="input-small" ng-show="category.addingOne" style="margin-top: 5px"/>
                     </form>
                     <ul>

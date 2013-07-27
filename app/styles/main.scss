@@ -47,7 +47,7 @@ input[type="text"].input-small {
   max-height: 25px;
   font-size: 8pt;
   float: right;
-  padding-right: 100px;
+  padding-right: 10px;
   margin: 0;
 }
 .new-category a {
@@ -67,4 +67,8 @@ input[type="text"].input-small {
   padding: 5px;
   @include border-radius(5px);
   margin-bottom: 5px;
+}
+.mouseover-title {
+  position:absolute;
+  color: slategrey;
 }
