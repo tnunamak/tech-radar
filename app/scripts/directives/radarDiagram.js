@@ -31,7 +31,7 @@ angular.module('techRadarApp').directive('radarDiagram', [ 'radarService', funct
 
       var arc = d3.svg.arc();
 
-      var svg = d3.select("body").append("svg")
+      var svg = d3.select(element[0]).append("svg")
         .attr("width", width)
         .attr("height", height);
       var svgArcs = svg.append("g")
