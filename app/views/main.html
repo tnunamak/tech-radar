@@ -9,15 +9,15 @@
         <div class="span7">
             <radar-diagram height="700" width="700"/>
         </div>
-        <div class="span5 radar-manager">
+        <div class="span4 radar-manager">
             <ul class="nav nav-tabs">
                 <li ng-repeat="status in radarData" ng-class="{active : status.active}">
                     <a ng-click="setActive(status)">{{ status.label }}</a>
                 </li>
             </ul>
             <div ng-repeat="status in radarData" ng-show="status.active">
-                <div ng-repeat="category in status.categories">
-                    <h5 style="display: inline">{{ category.label }}</h5>
+                <div class="category"  ng-repeat="category in status.categories" style="background-color: {{category.color}}">
+                    <h5 style="display: inline;">{{ category.label }} - {{category.color}}</h5>
                     <form ng-submit="category.addingOne = false; addTech(category, category.new)" class="new-category">
                         <a href="#" ng-click="category.addingOne = true" ng-hide="category.addingOne">new</a>
                         <a href="#" ng-click="category.new = ''; category.addingOne = false" ng-show="category.addingOne">cancel</a>

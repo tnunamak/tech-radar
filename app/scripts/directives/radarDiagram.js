@@ -89,7 +89,7 @@ angular.module('techRadarApp').directive('radarDiagram', ['$log', 'radarService'
         /* If two nodes are within a box of xThreshold-by-yThreshold dimensions, reject this placement */
         /* This should scale with the diagramRadius */
         var xThreshold = .15 * diagramRadius;
-        var yThreshold = .04 * diagramRadius;
+        var yThreshold = .045 * diagramRadius;
 
         var foundOne = false;
         _.each(radarService.radar.getTechnologies(), function (p) {
@@ -134,6 +134,9 @@ angular.module('techRadarApp').directive('radarDiagram', ['$log', 'radarService'
         .attr("fill", function (d, slice, ring) {
           return colorFiveGroupsOfSeven(7*slice + ring + 3 );
         })
+        .attr("stroke", "grey")
+        .attr("stroke-width", "1px")
+        .attr("stroke-opacity", ".25")
         .datum(function (d, i, j) {
           var numRings = _.size(radarService.statuses);
           d.arc = { innerRadius: getInnerRadius(diagramRadius, numRings, j),
@@ -143,7 +146,6 @@ angular.module('techRadarApp').directive('radarDiagram', ['$log', 'radarService'
         })
         .attr("d", function (d) {
           return arc.innerRadius(d.arc.innerRadius).outerRadius(d.arc.outerRadius)(d.arc);
-          /* draw this slice of the ring */
         });
 
       var nodeStatusEnter = svgNodes.selectAll("g").data(radarService.radar.data).enter().append("g").attr("class", "tech");
@@ -154,6 +156,11 @@ angular.module('techRadarApp').directive('radarDiagram', ['$log', 'radarService'
         })
         .enter()
         .append("g")
+        .datum(function(category, categoryIndex) {
+          console.log(category);
+          category.color = colorFiveGroupsOfSeven(7 * categoryIndex + 6);
+          return category;
+        })
         .attr("class", "category");
 
       var technologies;
