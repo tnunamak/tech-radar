@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('techRadarApp').directive('radarDiagram', [ 'radarService', function (radarService) {
+angular.module('techRadarApp').directive('radarDiagram', ['$log', 'radarService', function ($log, radarService) {
   return {
     restrict: 'E',
     templateUrl: 'views/radar.html',
@@ -18,7 +18,24 @@ angular.module('techRadarApp').directive('radarDiagram', [ 'radarService', funct
         padding = 30,
         diagramRadius = Math.min(attrs.width, attrs.height) / 2 - padding;
 
-      var color = d3.scale.category20();
+      var color = d3.scale.category20c().domain(_.range(20));
+      var colorFiveGroupsOfSeven = d3.scale.category20c().copy();
+
+      var colorGroups = _.groupBy(color.range(), function(a, b){
+        return Math.floor(b/4);
+      });
+
+      colorFiveGroupsOfSeven.range(_.flatten(_.map(colorGroups, function(group){
+        var expandedGroup = [];
+        _.each(group, function(item, index, group){
+           expandedGroup.push(item);
+          if(index < group.length - 1) {
+            expandedGroup.push(d3.interpolateRgb(item, group[index+1])(.5));
+          }
+        });
+        return expandedGroup;
+      })));
+      colorFiveGroupsOfSeven.domain(_.range(35));
 
       var pie = d3.layout.pie()
         .sort(null);
@@ -114,8 +131,8 @@ angular.module('techRadarApp').directive('radarDiagram', [ 'radarService', funct
         .append("g")
         .attr("class", "slice");
       arcCategoryEnter.append("path")
-        .attr("fill", function (d, i) {
-          return color(i);
+        .attr("fill", function (d, slice, ring) {
+          return colorFiveGroupsOfSeven(7*slice + ring + 3 );
         })
         .datum(function (d, i, j) {
           var numRings = _.size(radarService.statuses);
@@ -154,7 +171,7 @@ angular.module('techRadarApp').directive('radarDiagram', [ 'radarService', funct
             return d.technologies;
           });
 
-        console.log("Redrawing");
+        $log.info("Redrawing");
 
         var techEnter = technologies.enter().append("g").attr("class", "tech-label")
           .on('mouseover', function (d) {
