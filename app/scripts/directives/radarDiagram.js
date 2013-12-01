@@ -118,8 +118,12 @@ angular.module('techRadarApp').directive('radarDiagram', ['$log', 'radarService'
         var outer = arc.endAngle - angularBuffer;
         var theta = (Math.random() * (outer - inner)) + inner;
 
-        d.x = r * Math.cos(theta - (Math.PI / 2));
+        //console.log(this.getBBox().width /2);
         d.y = r * Math.sin(theta - (Math.PI / 2));
+
+        var boundaryX = d.y * Math.tan((Math.PI / 2) - (theta - Math.PI / 2));
+        //var horizontalOffset = Math.min(this.getBBox().width / 2, boundaryX);
+        d.x = r * Math.cos(theta - (Math.PI / 2)) - boundaryX;
       }
 
       var arcStatusEnter = svgArcs.selectAll("g").data(radarService.radar.data).enter().append("g").attr("class", "ring");
@@ -197,22 +201,40 @@ angular.module('techRadarApp').directive('radarDiagram', ['$log', 'radarService'
             redrawTechCircles();
           });
 
+        techEnter.append("rect");
+
         techEnter.append("text")
+          .text(function (d) {
+            return getTechLabelSubstring(d.label);
+          })
           .datum(function (d) {
             var parentData = d3.select(this.parentNode.parentNode).datum();
             while (!d.x || !d.y || isOverlappingAnotherPoint(d)) {
-              applyRandomXY(parentData.arc, d);
+              applyRandomXY.call(this, parentData.arc, d);
             }
             return d;
-          })
-          .text(function (d) {
-            return getTechLabelSubstring(d.label);
           })
           .attr("x", function (d) {
             return d.x + defaultTechRadius + 5;
           })
           .attr("y", function (d) {
             return d.y + 3.5;
+          });
+
+      techEnter.selectAll("rect").style("fill", "whitesmoke")
+          .style("opacity", "0.5")
+          .attr("x",function (d) {
+            return d.x + defaultTechRadius;
+          }).attr("y", function (d) {
+            return d.y - 5;
+          }).attr("width",function (d) {
+            return angular.element(this).next()[0].getBBox().width + 10;
+          }).attr("height", function (d) {
+            return 10;
+          }).attr("rx",function (d) {
+            return 10;
+          }).attr("ry", function (d) {
+            return 50;
           });
 
         techEnter.append("circle").attr("r", defaultTechRadius)
@@ -257,6 +279,7 @@ angular.module('techRadarApp').directive('radarDiagram', ['$log', 'radarService'
             if(i(1) !== this.textContent) {
               return function(t) {
                 this.textContent = i(t);
+                angular.element(this).parent().find("rect").attr("width", this.getBBox().width + 10);
               };
             }
           });

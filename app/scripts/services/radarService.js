@@ -1,7 +1,7 @@
 angular.module('techRadarApp').factory('radarService', ['$log', '$timeout', 'localStorageWatcher',
   function($log, $timeout, localStorageWatcher) {
 
-    var LOCAL_STORAGE_ID = 'sadc.technologyRadarData';
+    var LOCAL_STORAGE_ID = 'techradar.technologyRadarData';
 
     function Radar(data) {
       this.data = data ? data : [

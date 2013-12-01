@@ -29,7 +29,7 @@
                     </form>
                     <ul>
                         <li ng-repeat="technology in category.technologies" ng-class="{'active-tech' : technology.active}">
-                            {{ technology.label }} <i class="icon-remove" ng-click="removeTech(category, technology)"></i></li>
+                            <a ng-click="getWikiSummary(technology)">{{ technology.label }}</a> <i class="icon-remove" ng-click="removeTech(category, technology)"></i></li>
                     </ul>
                 </div>
             </div>
