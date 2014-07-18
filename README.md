@@ -2,7 +2,7 @@
 
 Manage the technology on your radar with this interactive UI.
 
-See it in action with the [example radar](http://dondochaka.dyndns.org/tech-radar).
+See it in action with the [example radar](http://tnunamak.github.io/tech-radar/dist).
 
 ![radar screenshot](https://raw.github.com/tnunamak/tech-radar/master/radar.png)
 
