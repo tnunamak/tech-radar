@@ -1,0 +1,38 @@
+<style type="text/css">
+    .tech-label {
+        background: white;
+        font-size: 8pt;
+    }
+</style>
+<div class="container">
+    <div class="row">
+        <div class="span7">
+            <span class="mouseover-title">
+                <h3>{{activeCategory.label}}</h3>
+                <h4>{{ activeStatus.label}}</h4>
+            </span>
+            <radar-diagram height="700" width="700">
+        </div>
+        <div class="span4 radar-manager">
+            <ul class="nav nav-tabs">
+                <li ng-repeat="status in radarData" ng-class="{active : status.active}">
+                    <a ng-click="setActive(status)">{{ status.label }}</a>
+                </li>
+            </ul>
+            <div ng-repeat="status in radarData" ng-show="status.active">
+                <div class="category" ng-repeat="category in status.categories" style="background-color: {{category.color}}">
+                    <h5 style="display: inline">{{ category.label }}</h5>
+                    <form ng-submit="category.addingOne = false; addTech(category, category.new)" class="new-category">
+                        <a ng-click="category.addingOne = true" ng-hide="category.addingOne">new</a>
+                        <a ng-click="category.new = ''; category.addingOne = false" ng-show="category.addingOne">cancel</a>
+                        <input type="text" ng-model="category.new" class="input-small" ng-show="category.addingOne" style="margin-top: 5px">
+                    </form>
+                    <ul>
+                        <li ng-repeat="technology in category.technologies" ng-class="{'active-tech' : technology.active}">
+                            {{ technology.label }} <i class="icon-remove" ng-click="removeTech(category, technology)"></i></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
