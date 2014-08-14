@@ -183,6 +183,8 @@ angular.module('techRadarApp').directive('radarDiagram', ['$log', 'radarService'
         technologies = nodeCategoryEnter.selectAll("g")
           .data(function (d) {
             return d.technologies;
+          }, function (d) {
+            return d.label;
           });
 
         $log.info("Redrawing");
